@@ -6,6 +6,7 @@ from datetime import timedelta
 
 class Court(models.Model):
     name = models.CharField(max_length=500)
+    key = models.CharField(max_length=100, default="This Is The Default Password 123$%^")
 
     def __str__(self):
         return self.name
@@ -18,7 +19,8 @@ class Ticket(models.Model):
     request_stamp = models.DateTimeField(auto_now_add=True)
     served_stamp = models.DateTimeField(default=now_plus_thirty)
     message = models.TextField(max_length=5000)
+    email = models.EmailField()
     court = models.ForeignKey('Court')
 
     def __str__(self):
-        return "Name: {}\nRequested: {}\nServed: {}\nMessage: {}\nCourt: {}".format(self.name,self.request_stamp,self.served_stamp,self.message,self.court)
+        return "Name: {}\nEmail: {}\nRequested: {}\nServed: {}\nMessage: {}\nCourt: {}".format(self.name,self.email,self.request_stamp,self.served_stamp,self.message,self.court)

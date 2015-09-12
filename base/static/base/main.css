@@ -1,3 +1,11 @@
 li a {
   color:red;
 }
+
+div a.success {
+  color:green;
+}
+
+div a.error {
+  color:red;
+}

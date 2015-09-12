@@ -1,16 +1,50 @@
 {% include "base/head.html" %}
 
-<button type="button" class="btn btn-default">Back</button>
+<a href="{% url 'base:home' %}">
+  <button type="button" class="btn btn-default">Home</button>
+</a>
 
 <h1>{{court.name}}</h1>
+
+{% if messages %}
+<div class="messages">
+  {% for message in messages %}
+  <a{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</a><br />
+  {% endfor %}
+</div>
+<br />
+{% endif %}
 
 <form action="{% url 'base:reserve' %}" method="post">
 {% csrf_token %}
 
 <input name="court_id" type="hidden" value="{{court.id}}"></input>
-<input name="name" type="text" class="form-control" placeholder="Your full name">
+<input name="name" type="text" class="form-control" placeholder="Your full name" />
+<input name="email" type="text" class="form-control" placeholder="Your email" />
 <textarea name="message" class="form-control" rows="3" maxlength="5000" placeholder="Your concern"></textarea>
 <input type="submit" class="btn btn-success" value="Reserve Ticket" />
+
 </form>
 
-<div class="status">{{status}}</div>
+
+{% if agent_data %}
+
+  <button type="button" class="btn btn-default">Log out</button>
+  <button type="button" class="btn btn-default">Next</button>
+
+  {% for ticket in agent_data %}
+      <pre class="ticket">{{ticket}}</pre>
+  {% endfor %}
+
+
+{% elif ticket_list %}
+
+    {% for ticket in ticket_list %}
+        <div class="ticket">{{ ticket }}</div>
+    {% endfor %}
+
+{% else %}
+
+<p>No tickets are enqueued.</p>
+
+{% endif %}
