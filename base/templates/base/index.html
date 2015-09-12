@@ -1,9 +1,24 @@
+
+{% include "base/head.html" %}
+
+
 {% if court_list %}
-    <ul>
+
+<div class="dropdown">
+  <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+    Select court
+    <span class="caret"></span>
+  </button>
+  <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+
     {% for court in court_list %}
-        <li><a href="/{{ court.id }}/">{{ court.name }}</a></li>
+        <li><a href="{% url 'base:court' court.id %}">{{ court.name }}</a></li>
     {% endfor %}
-    </ul>
+  </ul>
+</div>
+
 {% else %}
-    <p>No courts are available.</p>
+
+<p>No courts are available.</p>
+
 {% endif %}

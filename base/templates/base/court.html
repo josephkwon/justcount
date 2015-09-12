@@ -1,0 +1,16 @@
+{% include "base/head.html" %}
+
+<button type="button" class="btn btn-default">Back</button>
+
+<h1>{{court.name}}</h1>
+
+<form action="{% url 'base:reserve' %}" method="post">
+{% csrf_token %}
+
+<input name="court_id" type="hidden" value="{{court.id}}"></input>
+<input name="name" type="text" class="form-control" placeholder="Your full name">
+<textarea name="message" class="form-control" rows="3" maxlength="5000" placeholder="Your concern"></textarea>
+<input type="submit" class="btn btn-success" value="Reserve Ticket" />
+</form>
+
+<div class="status">{{status}}</div>
