@@ -1,0 +1,9 @@
+{% if court_list %}
+    <ul>
+    {% for court in court_list %}
+        <li><a href="/{{ court.id }}/">{{ court.name }}</a></li>
+    {% endfor %}
+    </ul>
+{% else %}
+    <p>No courts are available.</p>
+{% endif %}
