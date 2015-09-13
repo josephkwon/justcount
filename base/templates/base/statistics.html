@@ -2,33 +2,27 @@
 
 <div class="history">
 
-  <div class="history-center">
+    <div class="history-center">
 
-    <a href="{% url 'base:home' %}">
-      <button type="button" class="btn btn-default">Home</button>
-    </a>
+        <a href="{% url 'base:home' %}">Home</a>
+        <a href="{% url 'base:court' court.id %}">Show Tickets</a>
 
-  <a href="{% url 'base:court' court.id %}">
-    <button type="button" class="btn btn-default">Show Tickets</button>
-  </a>
+        <h1>{{court.name}} Statistics</h1>
 
-    <h1>{{court.name}} Statistics</h1>
+        {% if messages %}
+        <div class="messages">
+            {% for message in messages %}
+            <a{% if message.tags %} class="{{ message.tags }}" {% endif %}>{{ message }}</a>
+                <br /> {% endfor %}
+        </div>
+        <br /> {% endif %}
 
-    {% if messages %}
-    <div class="messages">
-      {% for message in messages %}
-      <a{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</a><br />
-      {% endfor %}
+        <p>{{avg_time}} average minutes per ticket</p>
+        <p>{{total_served_day}} tickets served in the last 24 hours</p>
+        <p>{{total_served_month}} tickets served last month</p>
+        <p>{{total_served_year}} tickets served last year</p>
+        <p>{{total_served}} tickets served all time</p>
+
     </div>
-    <br />
-    {% endif %}
-
-    <p>{{avg_time}} average minutes per ticket</p>
-    <p>{{total_served_day}} tickets served in the last 24 hours</p>
-    <p>{{total_served_month}} tickets served last month</p>
-    <p>{{total_served_year}} tickets served last year</p>
-    <p>{{total_served}} tickets served all time</p>
-
-  </div>
 
 </div>

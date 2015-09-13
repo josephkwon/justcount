@@ -1,75 +1,60 @@
 {% include "base/head.html" %}
 
-<div class="court">
 
-  <div class="court-center">
 
-    <a href="{% url 'base:home' %}">
-      <button type="button" class="btn btn-default">Home</button>
-    </a>
-    <a href="{% url 'base:stats' court.id%}">
-      <button type="button" class="btn btn-default">Statistics</button>
-    </a>
+<div class="court-center">
 
-    <h1>{{court.name}}</h1>
+    <a href="{% url 'base:stats' court.id%}">Statistics</a>
+    <a href="{% url 'base:home' %}">Home</a>
+
+    {% if logged_in %}
+    <a href="{% url 'base:history' court.id 0%}">History</a>
+    <a href="{% url 'base:logout' court.id %}">Log Out</a>
+    {% endif %}
+
+    <div class="court-name">{{court.name}}</div>
 
     {% if messages %}
     <div class="messages">
-      {% for message in messages %}
-      <a{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</a><br />
-      {% endfor %}
+        {% for message in messages %}
+        <a{% if message.tags %} class="{{ message.tags }}" {% endif %}>{{ message }}</a>
+            <br /> {% endfor %}
     </div>
-    <br />
-    {% endif %}
+    <br /> {% endif %}
 
     <form class="reserve-form bottom-margin" action="{% url 'base:reserve' %}" method="post">
-    {% csrf_token %}
+        {% csrf_token %}
 
-    <input name="court_id" type="hidden" class="court_id form-control" value="{{court.id}}"></input>
-    <input name="name" type="text" class="form-control" placeholder="Your full name" />
-    <input name="email" type="text" class="form-control" placeholder="Your email" />
-    <textarea name="message" class="form-control" rows="3" maxlength="5000" placeholder="Your concern"></textarea>
-    <input type="submit" class="btn btn-success top-margin" value="Reserve Ticket" />
+        <input name="court_id" type="hidden" class="court_id form-control" value="{{court.id}}"></input>
+        <input name="name" type="text" class="form-control" placeholder="Your full name" />
+        <input name="email" type="text" class="form-control" placeholder="Your email" />
+        <textarea name="message" class="form-control" rows="3" maxlength="5000" placeholder="Your concern"></textarea>
+        <input type="submit" class="btn btn-default top-margin" value="Reserve Ticket" />
 
     </form>
 
 
     {% if logged_in %}
     <div>
-      <script>$('.reserve-form').hide();</script>
-      <a href="{% url 'base:history' court.id 0%}">
-        <button type="button" class="btn btn-default">History</button>
-      </a>
-      <a href="{% url 'base:logout' court.id%}">
-        <button type="button" class="btn btn-default">Log Out</button>
-    </a>
-</div>
-<div class="top-margin bottom-margin">
-      <a href="{% url 'base:process_ticket' court.id%}">
-        <button type="button" class="btn btn-default">Process Next Ticket</button>
-      </a>
-  </div>
+        <script>
+            $('.reserve-form').hide();
+        </script>
 
-      {% if agent_data %}
-        {% for ticket in agent_data %}
-            <pre class="ticket margin-top">{{ticket}}</pre>
-        {% endfor %}
-      {% else %}
-        <pre class="margin-top">No tickets are enqueued.</pre>
-      {% endif %}
+    </div>
+    <div class="top-margin bottom-margin">
+        <a href="{% url 'base:process_ticket' court.id%}">
+            <button type="button" class="btn btn-default">Process Next Ticket</button>
+        </a>
+    </div>
 
-    {% else %}
-        {% if ticket_list %}
-
-            {% for ticket in ticket_list %}
-                <pre class="ticket margin-top">{{ ticket }}</pre>
-            {% endfor %}
-
-        {% else %}
-            <pre class="margin-top">No tickets are enqueued.</pre>
-        {% endif %}
-    {% endif %}
-
-  </div>
+    {% if agent_data %} {% for ticket in agent_data %}
+    <pre class="ticket margin-top">{{ticket}}</pre>
+    {% endfor %} {% else %}
+    <pre class="margin-top">No tickets are enqueued.</pre>
+    {% endif %} {% else %} {% if ticket_list %} {% for ticket in ticket_list %}
+    <pre class="ticket margin-top">{{ ticket }}</pre>
+    {% endfor %} {% else %}
+    <pre class="margin-top">No tickets are enqueued.</pre>
+    {% endif %} {% endif %}
 
 </div>

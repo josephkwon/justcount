@@ -1,47 +1,94 @@
-.home, .court, .login {
-  height: 100vh;
-  width: 100vw;
+body {
+    height: 100vh;
+    width: 100vw;
+    font-family: 'Lato', sans-serif;
+    color: #717171;
 }
+
 .home-center {
-  padding: 30vh 0 0 0;
-  margin: 0 auto;
-  text-align: center;
+    padding: 10vh 0 0 0;
+    margin: 0 auto;
+    text-align: center;
 }
+
 .court-center, .login-center, .history-center {
-  width: 40vw;
-  margin: 0 auto;
+    width: 30vw;
+    margin: 0 auto;
 }
+
+.court-list {}
+
+.court-list-item {}
+
+
+.court-name {
+    font-weight: 100;
+    color: rgb(1, 184, 90);
+    font-size: 35px;
+    margin-top: 5vh;
+    text-transform: uppercase;
+    padding-right: 10px;
+}
+
 .home-title {
-  font-size: 50px;
+    font-weight: 100;
+    font-size: 30px;
+    color: rgb(1, 184, 90);
 }
+
 .home-sub {
-  font-size: 20px;
+    font-size: 20px;
+    font-weight: 100;
 }
 
+a:link {
+    color: #717171;
+    text-decoration: none;
+    padding-right: 5px;
+    text-transform: uppercase;
+    font-size: 14px;
+    font-weight: 100;
+}
 
+a:visited {
+    color: #717171;
+    text-decoration: none;
+}
+
+a:hover {
+    color: #4cb8ca;
+    text-decoration: none;
+    transition: 300ms;
+}
 
 .top-margin {
-  margin:15px 0 0 0  !important;
+    margin: 15px 0 0 0 !important;
 }
+
 .top-padding {
-  padding:15px 0 0 0  !important;
+    padding: 15px 0 0 0 !important;
 }
+
 .bottom-margin {
-  margin-bottom: 30px;
+    margin-bottom: 30px;
 }
+
 .form-control {
-  margin-top:15px;
+    margin-top: 15px;
 }
 
+.hidden {
+    display: none;
+}
 
-li a {
-  color:red;
+.btn:focus {
+    outline: none;
 }
 
 div a.success {
-  color:green;
+    color: green;
 }
 
 div a.error {
-  color:red;
+    color: red;
 }

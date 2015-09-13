@@ -1,33 +1,25 @@
-
 {% include "base/head.html" %}
 
+{% if court_list %}
 
-<div class="home">
-
-  {% if court_list %}
-
-  <div class="home-center">
-    <div class="home-title">Just Count</div>
-    <div class="home-sub">Department of Justice Ticketing System</div>
-
-    <div class="dropdown top-margin">
-      <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-        Select court
-        <span class="caret"></span>
-      </button>
-      <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
-        {% for court in court_list %}
-            <li><a href="{% url 'base:court' court.id %}">{{ court.name }}</a></li>
-        {% endfor %}
-      </ul>
+<div class="home-center">
+    <div class="home-title">JUST COUNT</div>
+    <div class="home-sub">
+        A Simple Ticketing System
+        <br> For the U.S. Department of Justice
+        <br>
     </div>
-  </div>
+    <button type="button" class="find-court-btn btn btn-default top-margin">Find Your Court</button>
+    <div class="court-list top-margin hidden">
+        {% for court in court_list %}
+        <div class="court-list-item">
+            <a href="{% url 'base:court' court.id %}">{{ court.name }}</a>
+        </div>
+        {% endfor %}
+    </div>
 
-  {% else %}
+{% else %}
 
     <p>No courts are available.</p>
 
-  {% endif %}
-
-
-</div>
+{% endif %}
