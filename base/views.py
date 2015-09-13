@@ -107,7 +107,12 @@ def login_start(request):
     return render(request, 'base/login.html', context)
 
 def login_process(request):
-    court_id = request.POST['court_id']
+    try:
+        court_id = request.POST['court_id']
+    except:
+        messages.error(request, "Please select your court.")
+        return HttpResponseRedirect(reverse('base:login_start'))
+    
     key = request.POST['key']
     actual_key = Court.objects.get(id=court_id).key
     if key == actual_key:
