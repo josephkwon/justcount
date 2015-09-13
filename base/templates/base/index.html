@@ -16,7 +16,6 @@
         <span class="caret"></span>
       </button>
       <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
-
         {% for court in court_list %}
             <li><a href="{% url 'base:court' court.id %}">{{ court.name }}</a></li>
         {% endfor %}
