@@ -42,7 +42,7 @@ def history(request, court_id, page_id):
             return render(request, 'base/history.html', {'court': court, 'history_data': tickets[start_ticket:min(end_ticket, len(tickets))], 'next_page': start_ticket + tickets_per_page, 'prev_page': max(0,start_ticket - tickets_per_page), 'logged_in': True})
     else:
         messages.error(request, "You must be logged in to view history.")
-        return HttpResponseRedirect(reverse('base:court', args=court_id))
+        return HttpResponseRedirect(reverse('base:court', kwargs={'court_id':court_id}))
 
 def statistics(request, court_id):
     court = get_object_or_404(Court, pk=court_id)
@@ -67,7 +67,7 @@ def reserve(request):
 
     if not name or not email:
         messages.error(request, "Please enter all fields")
-        return HttpResponseRedirect(reverse('base:court', args=court_id))
+        return HttpResponseRedirect(reverse('base:court', kwargs={'court_id':court_id}))
     try:
         t = Ticket()
         t.name = name
@@ -82,7 +82,7 @@ def reserve(request):
         messages.success(request, "Your ticket has been submitted! Your ticket number is {}".format(t.id))
     except:
         messages.error(request, "Invalid data. Check your email address.")
-    return HttpResponseRedirect(reverse('base:court', args=court_id))
+    return HttpResponseRedirect(reverse('base:court', kwargs={'court_id':court_id}))
 
 def process_ticket(request, court_id):
     if 'court_agent_' + str(court_id) in request.session:
@@ -98,7 +98,7 @@ def process_ticket(request, court_id):
             messages.error(request, "No tickets left to serve.")
     else:
         messages.error(request, "You must be logged in to process a ticket.")
-    return HttpResponseRedirect(reverse('base:court', args=court_id))
+    return HttpResponseRedirect(reverse('base:court', kwargs={'court_id':court_id}))
 
 
 def login_start(request):
@@ -112,13 +112,13 @@ def login_process(request):
     except:
         messages.error(request, "Please select your court.")
         return HttpResponseRedirect(reverse('base:login_start'))
-    
+
     key = request.POST['key']
     actual_key = Court.objects.get(id=court_id).key
     if key == actual_key:
         request.session['court_agent_' + str(court_id)] = True
         messages.success(request, "You've been logged in!")
-        return HttpResponseRedirect(reverse('base:court', args=court_id))
+        return HttpResponseRedirect(reverse('base:court', kwargs={'court_id':court_id}))
 
     messages.error(request, "Login Failure")
     return HttpResponseRedirect(reverse('base:login_start'))
@@ -126,4 +126,4 @@ def login_process(request):
 def logout(request, court_id):
     request.session.flush()
     messages.success(request, "You've been logged out!")
-    return HttpResponseRedirect(reverse('base:court', args=court_id))
+    return HttpResponseRedirect(reverse('base:court', kwargs={'court_id':court_id}))
