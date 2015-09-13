@@ -59,3 +59,7 @@ def login_process(request):
 
     messages.error(request, "Login Failure")
     return HttpResponseRedirect(reverse('base:login_start'))
+
+def logout(request):
+    request.session.flush()
+    return HttpResponse("You are logged out.")
