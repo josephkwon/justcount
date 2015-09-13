@@ -1,0 +1,9 @@
+
+<a href="{% url 'base:home' %}" class="homelink">Home</a>
+<a href="{% url 'base:court' court.id %}" class="ticketlink">Tickets</a>
+<a href="{% url 'base:stats' court.id%}" class="statlink">Statistics</a>
+
+{% if logged_in %}
+    <a href="{% url 'base:history' court.id 0%}" class="historylink">History</a>
+    <a href="{% url 'base:logout' court.id %}" class="logoutlink">Log Out</a>
+{% endif %}
