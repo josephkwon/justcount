@@ -5,6 +5,7 @@ from .models import Court, Ticket
 from django.contrib import messages
 from django.core.mail import send_mail
 from django.utils import timezone as datetime
+from datetime import timedelta
 
 # Create your views here.
 
@@ -42,6 +43,16 @@ def history(request, court_id, page_id):
     else:
         messages.error(request, "You must be logged in to view history.")
         return HttpResponseRedirect(reverse('base:court', args=court_id))
+
+def statistics(request, court_id):
+    court = get_object_or_404(Court, pk=court_id)
+    now=datetime.now()
+    tickets = Ticket.objects.filter(court=court, served_stamp__lt=now).order_by('id')
+    total_served = len(tickets);
+    total_served_year = len(tickets.filter(served_stamp__gt=(now-timedelta(days=365))))
+    total_served_month = len(tickets.filter(served_stamp__gt=(now-timedelta(days=30))))
+    total_served_day = len(tickets.filter(served_stamp__gt=(now-timedelta(days=1))))
+    return render(request, 'base/statistics.html', {'court': court, 'total_served': total_served, 'total_served_year': total_served_year, 'total_served_month': total_served_month, 'total_served_day': total_served_day})
 
 def reserve(request):
     name = request.POST['name']

@@ -1,0 +1,33 @@
+{% include "base/head.html" %}
+
+<div class="history">
+
+  <div class="history-center">
+
+    <a href="{% url 'base:home' %}">
+      <button type="button" class="btn btn-default">Home</button>
+    </a>
+
+  <a href="{% url 'base:court' court.id %}">
+    <button type="button" class="btn btn-default">Show Tickets</button>
+  </a>
+
+    <h1>{{court.name}} Statistics</h1>
+
+    {% if messages %}
+    <div class="messages">
+      {% for message in messages %}
+      <a{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</a><br />
+      {% endfor %}
+    </div>
+    <br />
+    {% endif %}
+
+    <p>{{total_served}}</p>
+    <p>{{total_served_year}}</p>
+    <p>{{total_served_month}}</p>
+    <p>{{total_served_day}}</p>
+
+  </div>
+
+</div>

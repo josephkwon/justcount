@@ -7,6 +7,9 @@
     <a href="{% url 'base:home' %}">
       <button type="button" class="btn btn-default">Home</button>
     </a>
+    <a href="{% url 'base:stats' court.id%}">
+      <button type="button" class="btn btn-default">Statistics</button>
+    </a>
 
     <h1>{{court.name}}</h1>
 
@@ -19,7 +22,7 @@
     <br />
     {% endif %}
 
-    <form class="reserve-form" action="{% url 'base:reserve' %}" method="post">
+    <form class="reserve-form bottom-margin" action="{% url 'base:reserve' %}" method="post">
     {% csrf_token %}
 
     <input name="court_id" type="hidden" class="court_id form-control" value="{{court.id}}"></input>
@@ -32,16 +35,20 @@
 
 
     {% if logged_in %}
+    <div>
       <script>$('.reserve-form').hide();</script>
       <a href="{% url 'base:history' court.id 0%}">
         <button type="button" class="btn btn-default">History</button>
       </a>
       <a href="{% url 'base:logout' court.id%}">
         <button type="button" class="btn btn-default">Log Out</button>
-      </a>
+    </a>
+</div>
+<div class="top-margin bottom-margin">
       <a href="{% url 'base:process_ticket' court.id%}">
-        <button type="button" class="btn btn-default">Next</button>
+        <button type="button" class="btn btn-default">Process Next Ticket</button>
       </a>
+  </div>
 
       {% if agent_data %}
         {% for ticket in agent_data %}

@@ -7,6 +7,9 @@
     <a href="{% url 'base:home' %}">
       <button type="button" class="btn btn-default">Home</button>
     </a>
+    <a href="{% url 'base:stats' court.id%}">
+      <button type="button" class="btn btn-default">Statistics</button>
+    </a>
 
     <h1>{{court.name}} Ticket History</h1>
 
