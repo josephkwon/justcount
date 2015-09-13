@@ -48,7 +48,7 @@ def statistics(request, court_id):
     court = get_object_or_404(Court, pk=court_id)
     now=datetime.now()
     tickets = Ticket.objects.filter(court=court, served_stamp__lt=now).order_by('id')
-    avg_time = round(sum(((i.served_stamp - i.request_stamp).seconds/60 for i in tickets)), 2)
+    avg_time = round(sum(((i.served_stamp - i.request_stamp).seconds/60 for i in tickets))/len(tickets), 2)
     total_served = len(tickets);
     total_served_year = len(tickets.filter(served_stamp__gt=(now-timedelta(days=365))))
     total_served_month = len(tickets.filter(served_stamp__gt=(now-timedelta(days=30))))

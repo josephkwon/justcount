@@ -6,7 +6,7 @@ from datetime import timedelta
 
 class Court(models.Model):
     name = models.CharField(max_length=500)
-    key = models.CharField(max_length=100, default="This Is The Default Password 123$%^")
+    key = models.CharField(max_length=100, default="This Is The Default Password 123")
 
     def __str__(self):
         return self.name
@@ -15,7 +15,7 @@ def now_plus_thirty():
     return timezone.now() + timedelta(days=30)
 
 class Ticket(models.Model):
-    name = models.CharField(max_length=50)
+    name = models.CharField(max_length=40)
     request_stamp = models.DateTimeField(default=timezone.now)
     served_stamp = models.DateTimeField(default=now_plus_thirty)
     message = models.TextField(max_length=5000)

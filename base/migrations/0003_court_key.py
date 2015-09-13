@@ -14,6 +14,6 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='court',
             name='key',
-            field=models.CharField(default='This Is The Default Password 123$%^', max_length=100),
+            field=models.CharField(default='This Is The Default Password 123', max_length=100),
         ),
     ]
