@@ -27,7 +27,7 @@ with open('citations.csv', 'r') as name_file:
         if m != 2:
             d += random.randrange(3)
         t.request_stamp = datetime(2015, m, d, hour=random.randrange(24), minute=random.randrange(60), second=random.randrange(60))
-        t.served_stamp = request_stamp + timedelta(minutes=random.randrange(1,75))
+        t.served_stamp = t.request_stamp + timedelta(minutes=random.randrange(1,75))
         t.message = s[6] + ' ' + s[7] + ' ' + s[8]
         t.email = 'lynfhan@gmail.com'
         t.court = random.choice(courts)
