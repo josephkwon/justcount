@@ -1,0 +1,50 @@
+{% include "base/head.html" %}
+
+<div class="history">
+
+  <div class="history-center">
+
+    <a href="{% url 'base:home' %}">
+      <button type="button" class="btn btn-default">Home</button>
+    </a>
+
+    <h1>{{court.name}} Ticket History</h1>
+
+    {% if messages %}
+    <div class="messages">
+      {% for message in messages %}
+      <a{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</a><br />
+      {% endfor %}
+    </div>
+    <br />
+    {% endif %}
+
+
+    {% if logged_in %}
+      <a href="{% url 'base:court' court.id %}">
+        <button type="button" class="btn btn-default">Show Tickets</button>
+      </a>
+      <a href="{% url 'base:logout' court.id %}">
+        <button type="button" class="btn btn-default">Log Out</button>
+      </a><br />
+      <a href="{% url 'base:history' court.id prev_page %}">
+        <button type="button" class="btn btn-default">Previous</button>
+      </a>
+      <a href="{% url 'base:history' court.id next_page %}">
+        <button type="button" class="btn btn-default">Next</button>
+      </a>
+
+      {% if history_data %}
+        {% for ticket in history_data %}
+            <pre class="ticket margin-top">{{ticket}}</pre>
+        {% endfor %}
+      {% else %}
+        <pre class="margin-top">No tickets to show.</pre>
+      {% endif %}
+    {% else %}
+    <pre class="margin-top">You must be logged in to view History.</pre>
+    {% endif %}
+
+  </div>
+
+</div>

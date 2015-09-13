@@ -1,38 +1,46 @@
 {% include "base/head.html" %}
 
-<a href="{% url 'base:home' %}">
-  <button type="button" class="btn btn-default">Home</button>
-</a>
+<div class="login">
 
-<h1>{{court.name}}</h1>
+  <div class="login-center">
 
-{% if messages %}
-<div class="messages">
-  {% for message in messages %}
-  <a{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</a><br />
-  {% endfor %}
+    <a href="{% url 'base:home' %}">
+      <button type="button" class="btn btn-default">Home</button>
+    </a>
+
+    <h1>{{court.name}}</h1>
+
+    {% if messages %}
+    <div class="messages">
+      {% for message in messages %}
+      <a{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</a><br />
+      {% endfor %}
+    </div>
+    <br />
+    {% endif %}
+
+
+    {% if court_list %}
+
+      <form action="{% url 'base:login_process' %}" method="post" class="bottom-margin">
+      {% csrf_token %}
+
+      <select name="court_id">
+        {% for court in court_list %}
+            <option value="{{court.id}}">{{ court.name }}</li>
+        {% endfor %}
+      </select>
+
+      <input name="key" type="password" class="form-control" placeholder="Key"/>
+      <input type="submit" class="btn btn-success top-margin" value="Login" />
+      </form>
+
+    {% else %}
+
+    <p>No courts are available.</p>
+
+    {% endif %}
+
+  </div>
+
 </div>
-<br />
-{% endif %}
-
-
-{% if court_list %}
-
-  <form action="{% url 'base:login_process' %}" method="post">
-  {% csrf_token %}
-
-  <select name="court_id">
-    {% for court in court_list %}
-        <option value="{{court.id}}">{{ court.name }}</li>
-    {% endfor %}
-  </select>
-
-  <input name="key" type="password" class="form-control" />
-  <input type="submit" class="btn btn-success" value="Login" />
-  </form>
-
-{% else %}
-
-<p>No courts are available.</p>
-
-{% endif %}

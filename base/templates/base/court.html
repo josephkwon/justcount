@@ -1,50 +1,68 @@
 {% include "base/head.html" %}
 
-<a href="{% url 'base:home' %}">
-  <button type="button" class="btn btn-default">Home</button>
-</a>
+<div class="court">
 
-<h1>{{court.name}}</h1>
+  <div class="court-center">
 
-{% if messages %}
-<div class="messages">
-  {% for message in messages %}
-  <a{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</a><br />
-  {% endfor %}
+    <a href="{% url 'base:home' %}">
+      <button type="button" class="btn btn-default">Home</button>
+    </a>
+
+    <h1>{{court.name}}</h1>
+
+    {% if messages %}
+    <div class="messages">
+      {% for message in messages %}
+      <a{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</a><br />
+      {% endfor %}
+    </div>
+    <br />
+    {% endif %}
+
+    <form class="reserve-form" action="{% url 'base:reserve' %}" method="post">
+    {% csrf_token %}
+
+    <input name="court_id" type="hidden" class="court_id form-control" value="{{court.id}}"></input>
+    <input name="name" type="text" class="form-control" placeholder="Your full name" />
+    <input name="email" type="text" class="form-control" placeholder="Your email" />
+    <textarea name="message" class="form-control" rows="3" maxlength="5000" placeholder="Your concern"></textarea>
+    <input type="submit" class="btn btn-success top-margin" value="Reserve Ticket" />
+
+    </form>
+
+
+    {% if logged_in %}
+      <script>$('.reserve-form').hide();</script>
+      <a href="{% url 'base:history' court.id 0%}">
+        <button type="button" class="btn btn-default">History</button>
+      </a>
+      <a href="{% url 'base:logout' court.id%}">
+        <button type="button" class="btn btn-default">Log Out</button>
+      </a>
+      <a href="{% url 'base:process_ticket' court.id%}">
+        <button type="button" class="btn btn-default">Next</button>
+      </a>
+
+      {% if agent_data %}
+        {% for ticket in agent_data %}
+            <pre class="ticket margin-top">{{ticket}}</pre>
+        {% endfor %}
+      {% else %}
+        <pre class="margin-top">No tickets are enqueued.</pre>
+      {% endif %}
+
+    {% else %}
+        {% if ticket_list %}
+
+            {% for ticket in ticket_list %}
+                <pre class="ticket margin-top">{{ ticket }}</pre>
+            {% endfor %}
+
+        {% else %}
+            <pre class="margin-top">No tickets are enqueued.</pre>
+        {% endif %}
+    {% endif %}
+
+  </div>
+
 </div>
-<br />
-{% endif %}
-
-<form action="{% url 'base:reserve' %}" method="post">
-{% csrf_token %}
-
-<input name="court_id" type="hidden" value="{{court.id}}"></input>
-<input name="name" type="text" class="form-control" placeholder="Your full name" />
-<input name="email" type="text" class="form-control" placeholder="Your email" />
-<textarea name="message" class="form-control" rows="3" maxlength="5000" placeholder="Your concern"></textarea>
-<input type="submit" class="btn btn-success" value="Reserve Ticket" />
-
-</form>
-
-
-{% if agent_data %}
-
-  <button type="button" class="log-out-btn btn btn-default">Log out</button>
-  <button type="button" class="btn btn-default">Next</button>
-
-  {% for ticket in agent_data %}
-      <pre class="ticket">{{ticket}}</pre>
-  {% endfor %}
-
-
-{% elif ticket_list %}
-
-    {% for ticket in ticket_list %}
-        <div class="ticket">{{ ticket }}</div>
-    {% endfor %}
-
-{% else %}
-
-<p>No tickets are enqueued.</p>
-
-{% endif %}

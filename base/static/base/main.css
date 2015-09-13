@@ -1,3 +1,39 @@
+.home, .court, .login {
+  height: 100vh;
+  width: 100vw;
+}
+.home-center {
+  padding: 30vh 0 0 0;
+  margin: 0 auto;
+  text-align: center;
+}
+.court-center, .login-center, .history-center {
+  width: 40vw;
+  margin: 0 auto;
+}
+.home-title {
+  font-size: 50px;
+}
+.home-sub {
+  font-size: 20px;
+}
+
+
+
+.top-margin {
+  margin:15px 0 0 0  !important;
+}
+.top-padding {
+  padding:15px 0 0 0  !important;
+}
+.bottom-margin {
+  margin-bottom: 30px;
+}
+.form-control {
+  margin-top:15px;
+}
+
+
 li a {
   color:red;
 }
