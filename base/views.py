@@ -75,7 +75,12 @@ def reserve(request):
         t.email = email
         t.court = Court.objects.get(id=court_id)
 
-        send_mail("Ticket Reserved!", "Your ticket number is {}".format(len(Ticket.objects.all()) + 1), "justcountbot@gmail.com", [email], fail_silently=False)
+        now=datetime.now()
+        tickets = Ticket.objects.filter(court=t.court, served_stamp__lt=now).order_by('id')
+        queued_tickets = len(Ticket.objects.filter(court=t.court, served_stamp__gt=now))
+        avg_time = int(sum(((i.served_stamp - i.request_stamp).seconds/60 for i in tickets))/len(tickets) * queued_tickets)
+
+        send_mail("Ticket Reserved!", "Your ticket number is {}.\nYour estimated wait time is {} minutes.".format(len(Ticket.objects.all()) + 1, avg_time), "justcountbot@gmail.com", [email], fail_silently=False)
 
         t.save()
 
