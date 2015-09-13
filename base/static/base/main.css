@@ -2,52 +2,74 @@ body {
     height: 100vh;
     width: 100vw;
     font-family: 'Lato', sans-serif;
-    color: #717171;
+}
+
+.home-title {
+    font-weight: 900;
+    font-size: 30px;
+    color: rgb(1, 184, 90);
+    margin-bottom: 10px;
+}
+
+.home-sub {
+    font-weight: 300;
+    font-size: 20px;
 }
 
 .home-center {
     padding: 10vh 0 0 0;
     margin: 0 auto;
     text-align: center;
+    width: 40vw;
 }
 
-.court-center, .login-center, .history-center {
+.stat-center, .court-center, .login-center, .history-center {
     width: 30vw;
+    min-width: 400px;
     margin: 0 auto;
+    padding-top: 10px;
 }
 
-.court-list {}
+.selection  {
+    width: 320px;
+    margin: 0 auto;
+    padding-top: 10px;
+}
 
-.court-list-item {}
-
+.section {
+    margin: 20px 0 20px 0;
+}
 
 .court-name {
-    font-weight: 100;
-    color: rgb(1, 184, 90);
-    font-size: 35px;
-    margin-top: 5vh;
-    text-transform: uppercase;
-    padding-right: 10px;
-}
-
-.home-title {
-    font-weight: 100;
+    font-weight: 900;
     font-size: 30px;
+    margin: 40px 0 0 0;
     color: rgb(1, 184, 90);
 }
 
-.home-sub {
+.header {
+    font-weight: 300;
     font-size: 20px;
-    font-weight: 100;
+    margin: 20px 0 15px 0;
 }
 
+.stat-box {
+    margin: 20px 0 0 0;
+}
+.stat {
+    font-size: 20px;
+    font-weight: 300;
+}
+
+a.greenlink:link, a.greenlink:visited {
+    color: rgb(1, 184, 90);
+}
 a:link {
     color: #717171;
     text-decoration: none;
     padding-right: 5px;
-    text-transform: uppercase;
-    font-size: 14px;
-    font-weight: 100;
+    font-size: 17px;
+    font-weight: 300;
 }
 
 a:visited {
@@ -69,8 +91,8 @@ a:hover {
     padding: 15px 0 0 0 !important;
 }
 
-.bottom-margin {
-    margin-bottom: 30px;
+.bottom-padding {
+    padding-bottom: 40px;
 }
 
 .form-control {
@@ -85,10 +107,14 @@ a:hover {
     outline: none;
 }
 
-div a.success {
-    color: green;
+.green {
+    color: rgb(1, 184, 90);
+    font-weight: 900;
+}
+.success {
+    color: rgb(24, 196, 191);
 }
 
-div a.error {
-    color: red;
+.error {
+    color: rgb(230, 124, 14);
 }

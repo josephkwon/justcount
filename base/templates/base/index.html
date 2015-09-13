@@ -3,20 +3,23 @@
 {% if court_list %}
 
 <div class="home-center">
-    <div class="home-title">JUST COUNT</div>
-    <div class="home-sub">
-        A Simple Ticketing System
+    <div class="home-title animated slideInDown">Just Count</div>
+    <div class="home-sub animated slideInUp">
+        A Simple Service Tracker
         <br> For the U.S. Department of Justice
         <br>
     </div>
-    <button type="button" class="find-court-btn btn btn-default top-margin">Find Your Court</button>
-    <div class="court-list top-margin hidden">
-        {% for court in court_list %}
-        <div class="court-list-item">
-            <a href="{% url 'base:court' court.id %}">{{ court.name }}</a>
-        </div>
-        {% endfor %}
+
+    <div class="selection animated slideInUp">
+        <select name="court_id" class="form-control court-list" onchange="location = this.options[this.selectedIndex].value;">
+            <option disabled selected>Select Court</option>
+
+            {% for court in court_list %}
+                <option value="{{court.id}}" value="{% url 'base:court' court.id %}">{{ court.name }}</option>
+            {% endfor %}
+        </select>
     </div>
+
 
 {% else %}
 

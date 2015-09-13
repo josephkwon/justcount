@@ -27,7 +27,7 @@ def court(request, court_id):
 def history(request, court_id, page_id):
     page_id = int(page_id)
     if 'court_agent_' + str(court_id) in request.session:
-        tickets_per_page = 10
+        tickets_per_page = 5
         if page_id == None:
             page_id = 0
         start_ticket = page_id
@@ -53,7 +53,11 @@ def statistics(request, court_id):
     total_served_year = len(tickets.filter(served_stamp__gt=(now-timedelta(days=365))))
     total_served_month = len(tickets.filter(served_stamp__gt=(now-timedelta(days=30))))
     total_served_day = len(tickets.filter(served_stamp__gt=(now-timedelta(days=1))))
-    return render(request, 'base/statistics.html', {'court': court, 'avg_time': avg_time, 'total_served': total_served, 'total_served_year': total_served_year, 'total_served_month': total_served_month, 'total_served_day': total_served_day})
+
+    logged_in = False
+    if 'court_agent_' + str(court_id) in request.session:
+        logged_in = True
+    return render(request, 'base/statistics.html', {'court': court, 'avg_time': avg_time, 'total_served': total_served, 'total_served_year': total_served_year, 'total_served_month': total_served_month, 'total_served_day': total_served_day, 'logged_in': logged_in})
 
 def reserve(request):
     name = request.POST['name']

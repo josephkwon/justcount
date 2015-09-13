@@ -4,12 +4,11 @@
 
     <div class="history-center">
 
-        <a href="{% url 'base:home' %}">Home</a>
-        <a href="{% url 'base:stats' court.id%}">Statistics</a>
-        {% if logged_in %}
-        <a href="{% url 'base:court' court.id %}">Show Tickets</a>
-        <a href="{% url 'base:logout' court.id %}">Log Out</a>
-        {% endif %}
+        {% include "base/nav.html" %}
+
+        <script>
+            $('.historylink').addClass('greenlink');
+        </script>
 
         <div class="court-name">{{court.name}} Ticket History</div>
 
@@ -21,12 +20,14 @@
         </div>
         <br /> {% endif %} {% if logged_in %}
 
-        <a href="{% url 'base:history' court.id prev_page %}">
-            <button type="button" class="btn btn-default">Previous</button>
-        </a>
-        <a href="{% url 'base:history' court.id next_page %}">
-            <button type="button" class="btn btn-default">Next</button>
-        </a>
+        <div class="section">
+            <a href="{% url 'base:history' court.id prev_page %}">
+                <button type="button" class="btn btn-default">Previous</button>
+            </a>
+            <a href="{% url 'base:history' court.id next_page %}">
+                <button type="button" class="btn btn-default">Next</button>
+            </a>
+        </div>
 
         {% if history_data %} {% for ticket in history_data %}
         <pre class="ticket margin-top">{{ticket}}</pre>

@@ -4,57 +4,63 @@
 
 <div class="court-center">
 
-    <a href="{% url 'base:stats' court.id%}">Statistics</a>
-    <a href="{% url 'base:home' %}">Home</a>
+    {% include "base/nav.html" %}
 
-    {% if logged_in %}
-    <a href="{% url 'base:history' court.id 0%}">History</a>
-    <a href="{% url 'base:logout' court.id %}">Log Out</a>
-    {% endif %}
+    <script>
+        $('.ticketlink').addClass('greenlink');
+    </script>
 
-    <div class="court-name">{{court.name}}</div>
+    <div class="court-name">{{court.name}} Tickets</div>
 
     {% if messages %}
     <div class="messages">
         {% for message in messages %}
-        <a{% if message.tags %} class="{{ message.tags }}" {% endif %}>{{ message }}</a>
+        <div{% if message.tags %} class="{{ message.tags }}" {% endif %}>{{ message }}</div>
             <br /> {% endfor %}
     </div>
-    <br /> {% endif %}
+    {% endif %}
 
-    <form class="reserve-form bottom-margin" action="{% url 'base:reserve' %}" method="post">
+    {% if not logged_in %}
+    <div class="header">Request a ticket</div>
+    <form class="reserve-form bottom-padding" action="{% url 'base:reserve' %}" method="post">
         {% csrf_token %}
 
         <input name="court_id" type="hidden" class="court_id form-control" value="{{court.id}}"></input>
         <input name="name" type="text" class="form-control" placeholder="Your full name" />
         <input name="email" type="text" class="form-control" placeholder="Your email" />
         <textarea name="message" class="form-control" rows="3" maxlength="5000" placeholder="Your concern"></textarea>
-        <input type="submit" class="btn btn-default top-margin" value="Reserve Ticket" />
+        <input type="submit" class="btn btn-default top-margin" value="Submit Request" />
 
     </form>
+    {% endif %}
+
+    <div class="header">Enqueued Tickets</div>
 
 
     {% if logged_in %}
-    <div>
-        <script>
-            $('.reserve-form').hide();
-        </script>
 
-    </div>
-    <div class="top-margin bottom-margin">
-        <a href="{% url 'base:process_ticket' court.id%}">
-            <button type="button" class="btn btn-default">Process Next Ticket</button>
-        </a>
-    </div>
+        {% if agent_data %}
+            <div class="section">
+                <a href="{% url 'base:process_ticket' court.id%}">
+                    <button type="button" class="btn btn-default">Process Next Ticket</button>
+                </a>
+            </div>
+            {% for ticket in agent_data %}
+            <pre class="ticket margin-top">{{ticket}}</pre>
+            {% endfor %}
+        {% else %}
+            <pre class="margin-top">No tickets are enqueued.</pre>
+        {% endif %}
 
-    {% if agent_data %} {% for ticket in agent_data %}
-    <pre class="ticket margin-top">{{ticket}}</pre>
-    {% endfor %} {% else %}
-    <pre class="margin-top">No tickets are enqueued.</pre>
-    {% endif %} {% else %} {% if ticket_list %} {% for ticket in ticket_list %}
-    <pre class="ticket margin-top">{{ ticket }}</pre>
-    {% endfor %} {% else %}
-    <pre class="margin-top">No tickets are enqueued.</pre>
+    {% else %}
+
+        {% if ticket_list %}
+            {% for ticket in ticket_list %}
+                <pre class="ticket margin-top">{{ ticket }}</pre>
+            {% endfor %}
+        {% else %}
+
+        <pre class="margin-top">No tickets are enqueued.</pre>
     {% endif %} {% endif %}
 
 </div>
