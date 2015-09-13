@@ -16,7 +16,7 @@ def now_plus_thirty():
 
 class Ticket(models.Model):
     name = models.CharField(max_length=50)
-    request_stamp = models.DateTimeField(auto_now_add=True)
+    request_stamp = models.DateTimeField(default=timezone.now)
     served_stamp = models.DateTimeField(default=now_plus_thirty)
     message = models.TextField(max_length=5000)
     email = models.EmailField()
